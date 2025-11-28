@@ -1,0 +1,157 @@
+@prefix mayor: <http://example.org/mayor/> .
+@prefix nyc: <http://example.org/nyc/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+nyc:New_York_City a schema1:City ;
+    rdfs:label "New York City" .
+
+nyc:Party_Liberal_Party_of_New_York a schema1:Organization ;
+    rdfs:label "Liberal Party of New York" .
+
+nyc:Term_Bill_de_Blasio_2002 a schema1:Role ;
+    rdfs:label "Mayoral Term of Bill de Blasio" ;
+    schema1:endDate "2009-12-31",
+        "2013-12-31",
+        "2021-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "2002-01-01"^^xsd:date .
+
+nyc:Term_Bill_de_Blasio_2010 a schema1:Role ;
+    rdfs:label "Mayoral Term of Bill de Blasio" ;
+    schema1:endDate "2009-12-31",
+        "2013-12-31",
+        "2021-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "2010-01-01"^^xsd:date .
+
+nyc:Term_Bill_de_Blasio_2014 a schema1:Role ;
+    rdfs:label "Mayoral Term of Bill de Blasio" ;
+    schema1:endDate "2009-12-31",
+        "2013-12-31",
+        "2021-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "2014-01-01"^^xsd:date .
+
+nyc:Term_Eric_Adams_2007 a schema1:Role ;
+    rdfs:label "Mayoral Term of Eric Adams" ;
+    schema1:endDate "2013-12-31",
+        "2021-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "2007-01-01"^^xsd:date .
+
+nyc:Term_Eric_Adams_2014 a schema1:Role ;
+    rdfs:label "Mayoral Term of Eric Adams" ;
+    schema1:endDate "2013-12-31",
+        "2021-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "2014-01-01"^^xsd:date .
+
+nyc:Term_Eric_Adams_2022 a schema1:Role ;
+    rdfs:label "Mayoral Term of Eric Adams" ;
+    schema1:endDate "2013-12-31",
+        "2021-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "2022-01-01"^^xsd:date .
+
+nyc:Term_Michael_Bloomberg_2002 a schema1:Role ;
+    rdfs:label "Mayoral Term of Michael Bloomberg" ;
+    schema1:endDate "2013-12-31",
+        "2025-01-14" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "2002-01-01"^^xsd:date .
+
+nyc:Term_Michael_Bloomberg_2022 a schema1:Role ;
+    rdfs:label "Mayoral Term of Michael Bloomberg" ;
+    schema1:endDate "2013-12-31",
+        "2025-01-14" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "2022-06-22"^^xsd:date .
+
+nyc:Term_Rudy_Giuliani_1981 a schema1:Role ;
+    rdfs:label "Mayoral Term of Rudy Giuliani" ;
+    schema1:endDate "2001-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "1981-02-20"^^xsd:date .
+
+nyc:Term_Rudy_Giuliani_1983 a schema1:Role ;
+    rdfs:label "Mayoral Term of Rudy Giuliani" ;
+    schema1:endDate "2001-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "1983-06-03"^^xsd:date .
+
+nyc:Term_Rudy_Giuliani_1994 a schema1:Role ;
+    rdfs:label "Mayoral Term of Rudy Giuliani" ;
+    schema1:endDate "2001-12-31" ;
+    schema1:isPartOf nyc:Office_of_Mayor ;
+    schema1:startDate "1994-01-01"^^xsd:date .
+
+nyc:Party_Independent_politician a schema1:Organization ;
+    rdfs:label "Independent politician" .
+
+mayor:Rudy_Giuliani a schema1:Person ;
+    rdfs:label "Rudy Giuliani" ;
+    mayor:precededBy mayor:Rudy_Giuliani ;
+    mayor:succeededBy mayor:Michael_Bloomberg,
+        mayor:Rudy_Giuliani ;
+    schema1:affiliation nyc:Party_Democratic_Party_\(United_States\),
+        nyc:Party_Independent_politician,
+        nyc:Party_Liberal_Party_of_New_York,
+        nyc:Party_Republican_Party_\(United_States\) ;
+    schema1:birthDate "1944-05-28"^^xsd:date ;
+    schema1:hasOccupation nyc:Term_Rudy_Giuliani_1981,
+        nyc:Term_Rudy_Giuliani_1983,
+        nyc:Term_Rudy_Giuliani_1994 .
+
+nyc:Party_Republican_Party_\(United_States\) a schema1:Organization ;
+    rdfs:label "Republican Party (United States)" .
+
+nyc:Party_Democratic_Party_\(United_States\) a schema1:Organization ;
+    rdfs:label "Democratic Party (United States)" .
+
+mayor:Bill_de_Blasio a schema1:Person ;
+    rdfs:label "Bill de Blasio" ;
+    mayor:precededBy mayor:Bill_de_Blasio,
+        mayor:Eric_Adams,
+        mayor:Michael_Bloomberg ;
+    mayor:succeededBy mayor:Bill_de_Blasio,
+        mayor:Eric_Adams ;
+    schema1:affiliation nyc:Party_Democratic_Party_\(United_States\) ;
+    schema1:birthDate "1961-05-08"^^xsd:date ;
+    schema1:hasOccupation nyc:Term_Bill_de_Blasio_2002,
+        nyc:Term_Bill_de_Blasio_2010,
+        nyc:Term_Bill_de_Blasio_2014 .
+
+mayor:Eric_Adams a schema1:Person ;
+    rdfs:label "Eric Adams" ;
+    mayor:precededBy mayor:Bill_de_Blasio,
+        mayor:Eric_Adams ;
+    mayor:succeededBy mayor:Bill_de_Blasio,
+        mayor:Eric_Adams,
+        mayor:Michael_Bloomberg ;
+    schema1:affiliation nyc:Party_Democratic_Party_\(United_States\),
+        nyc:Party_Republican_Party_\(United_States\) ;
+    schema1:birthDate "1960-09-01"^^xsd:date ;
+    schema1:hasOccupation nyc:Term_Eric_Adams_2007,
+        nyc:Term_Eric_Adams_2014,
+        nyc:Term_Eric_Adams_2022 .
+
+mayor:Michael_Bloomberg a schema1:Person ;
+    rdfs:label "Michael Bloomberg" ;
+    mayor:precededBy mayor:Eric_Adams,
+        mayor:Michael_Bloomberg,
+        mayor:Rudy_Giuliani ;
+    mayor:succeededBy mayor:Bill_de_Blasio,
+        mayor:Michael_Bloomberg ;
+    schema1:affiliation nyc:Party_Democratic_Party_\(United_States\),
+        nyc:Party_Independent_politician,
+        nyc:Party_Republican_Party_\(United_States\) ;
+    schema1:birthDate "1942-02-14"^^xsd:date ;
+    schema1:hasOccupation nyc:Term_Michael_Bloomberg_2002,
+        nyc:Term_Michael_Bloomberg_2022 .
+
+nyc:Office_of_Mayor a schema1:GovernmentOrganization ;
+    rdfs:label "Office of the Mayor" ;
+    schema1:parentOrganization nyc:New_York_City .
+
