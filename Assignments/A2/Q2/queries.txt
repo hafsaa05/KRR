@@ -1,0 +1,54 @@
+# queries.txt
+
+# 1. Simple triple pattern matching
+# Competency Question: Get all NYC mayors and their birth dates.
+SELECT ?mayor ?name ?birthDate
+WHERE {
+    ?mayor a dbo:Person .
+    ?mayor rdfs:label ?name .
+    ?mayor dbo:birthDate ?birthDate .
+    FILTER(lang(?name)='en')
+}
+
+# 2. Filtering using logical and numerical operators
+# Competency Question: Get NYC mayors born after 1940 who served after 2000.
+SELECT ?mayor ?name ?birthDate ?termStart
+WHERE {
+    ?mayor rdfs:label ?name .
+    ?mayor dbo:birthDate ?birthDate .
+    ?mayor dbp:termStart ?termStart .
+    FILTER(lang(?name)='en' && xsd:dateTime(?birthDate) > "1940-01-01T00:00:00"^^xsd:dateTime)
+    FILTER(xsd:dateTime(?termStart) >= "2000-01-01T00:00:00"^^xsd:dateTime)
+}
+
+# 3. Use of OPTIONAL
+# Competency Question: Get mayors and their death date if available.
+SELECT ?mayor ?name ?birthDate ?deathDate
+WHERE {
+    ?mayor rdfs:label ?name .
+    ?mayor dbo:birthDate ?birthDate .
+    OPTIONAL { ?mayor dbo:deathDate ?deathDate . }
+    FILTER(lang(?name)='en')
+}
+
+# 4. Aggregation (COUNT)
+# Competency Question: Count how many mayors belong to each political party.
+SELECT ?party (COUNT(?mayor) AS ?numMayors)
+WHERE {
+    ?mayor dbo:party ?party .
+}
+GROUP BY ?party
+
+# 5. Graph traversal across at least 3 hops
+# Competency Question: Get the successor of the predecessor of a mayor born after 1950.
+SELECT ?mayor ?name ?successor2Name
+WHERE {
+    ?mayor rdfs:label ?name .
+    ?mayor dbo:birthDate ?birthDate .
+    ?mayor dbo:predecessor ?pred1 .
+    ?pred1 dbo:predecessor ?pred2 .
+    ?pred2 dbo:successor ?successor2 .
+    ?successor2 rdfs:label ?successor2Name .
+    FILTER(lang(?name)='en')
+    FILTER(xsd:dateTime(?birthDate) > "1950-01-01T00:00:00"^^xsd:dateTime)
+}
