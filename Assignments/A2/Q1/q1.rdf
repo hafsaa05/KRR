@@ -1,0 +1,552 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/"
+     xml:base="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/affects -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/affects">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/hasCause -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/hasCause">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/needsCheck -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/needsCheck">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatedBy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/causeInfo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/causeInfo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patientName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patientName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/severityScore -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/severityScore">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/sizeCM -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/sizeCM">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/stageDurationDays -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/stageDurationDays">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/stageTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/stageTitle">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatmentTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatmentTitle">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/woundID -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/woundID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/AcuteWound -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/AcuteWound">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause"/>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChemicalExposure -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChemicalExposure">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChronicWound -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChronicWound">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/CleaningCare -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/CleaningCare">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/DressingCare -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/DressingCare">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ExistingCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ExistingCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatedBy"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Infection -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Infection">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Inflammatory -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Inflammatory">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/NewPatient -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/NewPatient">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient"/>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/PhysicalInjury -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/PhysicalInjury">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Proliferative -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Proliferative">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Remodeling -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Remodeling">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/SurgicalCare -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/SurgicalCare">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/SurgicalWound -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/SurgicalWound">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/needsCheck"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/affects"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/PhysicalInjury"/>
+        <causeInfo>Cut by sharp object</causeInfo>
+        <rdfs:label>Cut by sharp object</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChemicalExposure"/>
+        <causeInfo>Burn injury</causeInfo>
+        <rdfs:label>Burn injury</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Infection"/>
+        <causeInfo>Bacterial infection</causeInfo>
+        <rdfs:label>Bacterial infection</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Inflammatory"/>
+        <treatedBy rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment1"/>
+        <stageDurationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</stageDurationDays>
+        <stageTitle>Inflammatory</stageTitle>
+        <rdfs:label>Inflammatory stage</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Proliferative"/>
+        <treatedBy rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment2"/>
+        <stageDurationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</stageDurationDays>
+        <stageTitle>Proliferative</stageTitle>
+        <rdfs:label>Proliferative stage</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Remodeling"/>
+        <treatedBy rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment3"/>
+        <stageDurationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</stageDurationDays>
+        <stageTitle>Remodeling</stageTitle>
+        <rdfs:label>Remodeling stage</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/NewPatient"/>
+        <patientName>Ahmed</patientName>
+        <rdfs:label>Ahmed</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ExistingCondition"/>
+        <patientName>Hiba</patientName>
+        <rdfs:label>Hiba</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/NewPatient"/>
+        <patientName>Zain</patientName>
+        <rdfs:label>Zain</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/SurgicalCare"/>
+        <needsCheck rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound1"/>
+        <treatmentTitle>Daily dressing</treatmentTitle>
+        <rdfs:label>Daily dressing</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/CleaningCare"/>
+        <needsCheck rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound2"/>
+        <treatmentTitle>Surgical debridement</treatmentTitle>
+        <rdfs:label>Surgical debridement</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/DressingCare"/>
+        <needsCheck rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound3"/>
+        <treatmentTitle>Wound cover change</treatmentTitle>
+        <rdfs:label>Wound cover change</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChronicWound"/>
+        <affects rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient1"/>
+        <hasCause rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause1"/>
+        <healingStage rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage1"/>
+        <severityScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</severityScore>
+        <sizeCM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5.0</sizeCM>
+        <woundID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1001</woundID>
+        <rdfs:label>Wound 1001</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/SurgicalWound"/>
+        <affects rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient2"/>
+        <hasCause rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause2"/>
+        <healingStage rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage2"/>
+        <severityScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</severityScore>
+        <sizeCM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.5</sizeCM>
+        <woundID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1002</woundID>
+        <rdfs:label>Wound 1002</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/AcuteWound"/>
+        <affects rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient3"/>
+        <hasCause rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause3"/>
+        <healingStage rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage3"/>
+        <severityScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</severityScore>
+        <sizeCM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.2</sizeCM>
+        <woundID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1003</woundID>
+        <rdfs:label>Wound 1003</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChronicWound"/>
+        <affects rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient2"/>
+        <hasCause rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause3"/>
+        <healingStage rdf:resource="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage1"/>
+        <severityScore rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</severityScore>
+        <sizeCM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.8</sizeCM>
+        <woundID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1004</woundID>
+        <rdfs:label>Wound 1004</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
