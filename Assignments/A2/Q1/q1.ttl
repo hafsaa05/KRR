@@ -1,6 +1,7 @@
 @prefix : <http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/> .
@@ -8,148 +9,371 @@
 <http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/> rdf:type owl:Ontology .
 
 #################################################################
-# Object Properties
+#    Object Properties
 #################################################################
 
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/affects
 :affects rdf:type owl:ObjectProperty ;
          rdfs:domain :Wound ;
-         rdfs:range :Patient .
+         rdfs:range :Patient ;
+         rdfs:label "affects" .
 
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/hasCause
 :hasCause rdf:type owl:ObjectProperty ;
           rdfs:domain :Wound ;
-          rdfs:range :Cause .
+          rdfs:range :Cause ;
+          rdfs:label "has cause" .
 
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage
 :healingStage rdf:type owl:ObjectProperty ;
               rdfs:domain :Wound ;
-              rdfs:range :HealingStage .
+              rdfs:range :HealingStage ;
+              rdfs:label "healing stage" .
 
-:treatedBy rdf:type owl:ObjectProperty ;
-           rdfs:domain :HealingStage ;
-           rdfs:range :Treatment .
 
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/needsCheck
 :needsCheck rdf:type owl:ObjectProperty ;
             rdfs:domain :Treatment ;
-            rdfs:range :Wound .
+            rdfs:range :Wound ;
+            rdfs:label "needs check" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatedBy
+:treatedBy rdf:type owl:ObjectProperty ;
+           rdfs:domain :HealingStage ;
+           rdfs:range :Treatment ;
+           rdfs:label "treated by" .
+
 
 #################################################################
-# Data Properties
+#    Data properties
 #################################################################
 
-:patientName rdf:type owl:DatatypeProperty ;
-             rdfs:domain :Patient ;
-             rdfs:range xsd:string .
-
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/causeInfo
 :causeInfo rdf:type owl:DatatypeProperty ;
            rdfs:domain :Cause ;
-           rdfs:range xsd:string .
+           rdfs:range xsd:string ;
+           rdfs:label "cause info" .
 
-:woundID rdf:type owl:DatatypeProperty ;
-         rdfs:domain :Wound ;
-         rdfs:range xsd:int .
 
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patientName
+:patientName rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :Patient ;
+             rdfs:range xsd:string ;
+             rdfs:label "patient name" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/severityScore
 :severityScore rdf:type owl:DatatypeProperty ;
                rdfs:domain :Wound ;
-               rdfs:range xsd:int .
+               rdfs:range xsd:int ;
+               rdfs:label "severity score" .
 
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/sizeCM
 :sizeCM rdf:type owl:DatatypeProperty ;
         rdfs:domain :Wound ;
-        rdfs:range xsd:float .
+        rdfs:range xsd:float ;
+        rdfs:label "size in cm" .
 
-:stageTitle rdf:type owl:DatatypeProperty ;
-            rdfs:domain :HealingStage ;
-            rdfs:range xsd:string .
 
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/stageDurationDays
 :stageDurationDays rdf:type owl:DatatypeProperty ;
                    rdfs:domain :HealingStage ;
-                   rdfs:range xsd:int .
+                   rdfs:range xsd:int ;
+                   rdfs:label "stage duration (days)" .
 
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/stageTitle
+:stageTitle rdf:type owl:DatatypeProperty ;
+            rdfs:domain :HealingStage ;
+            rdfs:range xsd:string ;
+            rdfs:label "stage title" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatmentTitle
 :treatmentTitle rdf:type owl:DatatypeProperty ;
                 rdfs:domain :Treatment ;
-                rdfs:range xsd:string .
+                rdfs:range xsd:string ;
+                rdfs:label "treatment title" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/woundID
+:woundID rdf:type owl:DatatypeProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :Wound ;
+         rdfs:range xsd:int ;
+         rdfs:label "wound ID" .
+
 
 #################################################################
-# Classes and Subclasses (taxonomy)
+#    Classes
 #################################################################
 
-:Wound rdf:type owl:Class .
-:AcuteWound rdf:type owl:Class ; rdfs:subClassOf :Wound .
-:ChronicWound rdf:type owl:Class ; rdfs:subClassOf :Wound .
-:SurgicalWound rdf:type owl:Class ; rdfs:subClassOf :Wound .
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/AcuteWound
+:AcuteWound rdf:type owl:Class ;
+            rdfs:subClassOf :Wound ;
+            owl:disjointWith :ChronicWound ,
+                             :SurgicalWound .
 
-:Patient rdf:type owl:Class .
-:ExistingCondition rdf:type owl:Class ; rdfs:subClassOf :Patient .
-:NewPatient rdf:type owl:Class ; rdfs:subClassOf :Patient .
 
-:HealingStage rdf:type owl:Class .
-:Inflammatory rdf:type owl:Class ; rdfs:subClassOf :HealingStage .
-:Proliferative rdf:type owl:Class ; rdfs:subClassOf :HealingStage .
-:Remodeling rdf:type owl:Class ; rdfs:subClassOf :HealingStage .
-
-:Treatment rdf:type owl:Class .
-:CleaningCare rdf:type owl:Class ; rdfs:subClassOf :Treatment .
-:DressingCare rdf:type owl:Class ; rdfs:subClassOf :Treatment .
-:SurgicalCare rdf:type owl:Class ; rdfs:subClassOf :Treatment .
-
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Cause
 :Cause rdf:type owl:Class .
-:PhysicalInjury rdf:type owl:Class ; rdfs:subClassOf :Cause .
-:ChemicalExposure rdf:type owl:Class ; rdfs:subClassOf :Cause .
-:Infection rdf:type owl:Class ; rdfs:subClassOf :Cause .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChemicalExposure
+:ChemicalExposure rdf:type owl:Class ;
+                  rdfs:subClassOf :Cause ;
+                  owl:disjointWith :Infection ,
+                                   :PhysicalInjury .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ChronicWound
+:ChronicWound rdf:type owl:Class ;
+              rdfs:subClassOf :Wound ;
+              owl:disjointWith :SurgicalWound .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/CleaningCare
+:CleaningCare rdf:type owl:Class ;
+              rdfs:subClassOf :Treatment ;
+              owl:disjointWith :DressingCare ,
+                               :SurgicalCare .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/DressingCare
+:DressingCare rdf:type owl:Class ;
+              rdfs:subClassOf :Treatment ;
+              owl:disjointWith :SurgicalCare .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/ExistingCondition
+:ExistingCondition rdf:type owl:Class ;
+                   rdfs:subClassOf :Patient ;
+                   owl:disjointWith :NewPatient .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/HealingStage
+:HealingStage rdf:type owl:Class ;
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty :treatedBy ;
+                                owl:someValuesFrom :Treatment
+                              ] .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Infection
+:Infection rdf:type owl:Class ;
+           rdfs:subClassOf :Cause ;
+           owl:disjointWith :PhysicalInjury .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Inflammatory
+:Inflammatory rdf:type owl:Class ;
+              rdfs:subClassOf :HealingStage ;
+              owl:disjointWith :Proliferative ,
+                               :Remodeling .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/NewPatient
+:NewPatient rdf:type owl:Class ;
+            rdfs:subClassOf :Patient .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Patient
+:Patient rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/PhysicalInjury
+:PhysicalInjury rdf:type owl:Class ;
+                rdfs:subClassOf :Cause .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Proliferative
+:Proliferative rdf:type owl:Class ;
+               rdfs:subClassOf :HealingStage ;
+               owl:disjointWith :Remodeling .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Remodeling
+:Remodeling rdf:type owl:Class ;
+            rdfs:subClassOf :HealingStage .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/SurgicalCare
+:SurgicalCare rdf:type owl:Class ;
+              rdfs:subClassOf :Treatment .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/SurgicalWound
+:SurgicalWound rdf:type owl:Class ;
+               rdfs:subClassOf :Wound .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Treatment
+:Treatment rdf:type owl:Class ;
+           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                             owl:onProperty :needsCheck ;
+                             owl:someValuesFrom :Wound
+                           ] .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/Wound
+:Wound rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :affects ;
+                         owl:someValuesFrom :Patient
+                       ] .
+
 
 #################################################################
-# Axioms / Restrictions
+#    Individuals
 #################################################################
 
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :Wound :Patient :HealingStage :Treatment :Cause )
-] .
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause1
+:cause1 rdf:type owl:NamedIndividual ,
+                 :PhysicalInjury ;
+        :causeInfo "Cut by sharp object" ;
+        rdfs:label "Cut by sharp object" .
 
-:Wound rdfs:subClassOf [
-    rdf:type owl:Restriction ;
-    owl:onProperty :affects ;
-    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-    owl:onClass :Patient
-] .
 
-:HealingStage rdfs:subClassOf [
-    rdf:type owl:Restriction ;
-    owl:onProperty :treatedBy ;
-    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-    owl:onClass :Treatment
-] .
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause2
+:cause2 rdf:type owl:NamedIndividual ,
+                 :ChemicalExposure ;
+        :causeInfo "Burn injury" ;
+        rdfs:label "Burn injury" .
 
-:Treatment rdfs:subClassOf [
-    rdf:type owl:Restriction ;
-    owl:onProperty :needsCheck ;
-    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-    owl:onClass :Wound
-] .
 
-#################################################################
-# Individuals
-#################################################################
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/cause3
+:cause3 rdf:type owl:NamedIndividual ,
+                 :Infection ;
+        :causeInfo "Bacterial infection" ;
+        rdfs:label "Bacterial infection" .
 
-# Patients
-:patient1 rdf:type :NewPatient ; :patientName "Ahmed" ; rdfs:label "Ahmed" .
-:patient2 rdf:type :ExistingCondition ; :patientName "Hiba" ; rdfs:label "Hiba" .
-:patient3 rdf:type :NewPatient ; :patientName "Zain" ; rdfs:label "Zain" .
 
-# Causes
-:cause1 rdf:type :PhysicalInjury ; :causeInfo "Cut by sharp object" ; rdfs:label "Cut by sharp object" .
-:cause2 rdf:type :ChemicalExposure ; :causeInfo "Burn injury" ; rdfs:label "Burn injury" .
-:cause3 rdf:type :Infection ; :causeInfo "Bacterial infection" ; rdfs:label "Bacterial infection" .
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage1
+:healingStage1 rdf:type owl:NamedIndividual ,
+                        :Inflammatory ;
+               :treatedBy :treatment1 ;
+               :stageDurationDays "4"^^xsd:int ;
+               :stageTitle "Inflammatory" ;
+               rdfs:label "Inflammatory stage" .
 
-# Treatments
-:treatment1 rdf:type :SurgicalCare ; :treatmentTitle "Daily dressing" ; rdfs:label "Daily dressing" ; :needsCheck :wound1 .
-:treatment2 rdf:type :CleaningCare ; :treatmentTitle "Surgical debridement" ; rdfs:label "Surgical debridement" ; :needsCheck :wound2 .
-:treatment3 rdf:type :DressingCare ; :treatmentTitle "Wound cover change" ; rdfs:label "Wound cover change" ; :needsCheck :wound3 .
 
-# Healing Stages
-:healingStage1 rdf:type :Inflammatory ; :treatedBy :treatment1 ; :stageTitle "Inflammatory" ; :stageDurationDays 4 ; rdfs:label "Inflammatory stage" .
-:healingStage2 rdf:type :Proliferative ; :treatedBy :treatment2 ; :stageTitle "Proliferative" ; :stageDurationDays 7 ; rdfs:label "Proliferative stage" .
-:healingStage3 rdf:type :Remodeling ; :treatedBy :treatment3 ; :stageTitle "Remodeling" ; :stageDurationDays 10 ; rdfs:label "Remodeling stage" .
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage2
+:healingStage2 rdf:type owl:NamedIndividual ,
+                        :Proliferative ;
+               :treatedBy :treatment2 ;
+               :stageDurationDays "7"^^xsd:int ;
+               :stageTitle "Proliferative" ;
+               rdfs:label "Proliferative stage" .
 
-# Wounds
-:wound1 rdf:type :ChronicWound ; :affects :patient1 ; :hasCause :cause1 ; :healingStage :healingStage1 ; :severityScore 7 ; :sizeCM 5.0 ; :woundID 1001 ; rdfs:label "Wound 1001" .
-:wound2 rdf:type :SurgicalWound ; :affects :patient2 ; :hasCause :cause2 ; :healingStage :healingStage2 ; :severityScore 4 ; :sizeCM 3.5 ; :woundID 1002 ; rdfs:label "Wound 1002" .
-:wound3 rdf:type :AcuteWound ; :affects :patient3 ; :hasCause :cause3 ; :healingStage :healingStage3 ; :severityScore 5 ; :sizeCM 4.2 ; :woundID 1003 ; rdfs:label "Wound 1003" .
-:wound4 rdf:type :ChronicWound ; :affects :patient2 ; :hasCause :cause3 ; :healingStage :healingStage1 ; :severityScore 6 ; :sizeCM 4.8 ; :woundID 1004 ; rdfs:label "Wound 1004" .
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/healingStage3
+:healingStage3 rdf:type owl:NamedIndividual ,
+                        :Remodeling ;
+               :treatedBy :treatment3 ;
+               :stageDurationDays "10"^^xsd:int ;
+               :stageTitle "Remodeling" ;
+               rdfs:label "Remodeling stage" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient1
+:patient1 rdf:type owl:NamedIndividual ,
+                   :NewPatient ;
+          :patientName "Ahmed" ;
+          rdfs:label "Ahmed" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient2
+:patient2 rdf:type owl:NamedIndividual ,
+                   :ExistingCondition ;
+          :patientName "Hiba" ;
+          rdfs:label "Hiba" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/patient3
+:patient3 rdf:type owl:NamedIndividual ,
+                   :NewPatient ;
+          :patientName "Zain" ;
+          rdfs:label "Zain" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment1
+:treatment1 rdf:type owl:NamedIndividual ,
+                     :SurgicalCare ,
+                     :Treatment ;
+            :needsCheck :wound1 ;
+            :treatmentTitle "Daily dressing" ;
+            rdfs:label "Daily dressing" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment2
+:treatment2 rdf:type owl:NamedIndividual ,
+                     :CleaningCare ,
+                     :Treatment ;
+            :needsCheck :wound2 ;
+            :treatmentTitle "Surgical debridement" ;
+            rdfs:label "Surgical debridement" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/treatment3
+:treatment3 rdf:type owl:NamedIndividual ,
+                     :DressingCare ,
+                     :Treatment ;
+            :needsCheck :wound3 ;
+            :treatmentTitle "Wound cover change" ;
+            rdfs:label "Wound cover change" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound1
+:wound1 rdf:type owl:NamedIndividual ,
+                 :ChronicWound ;
+        :affects :patient1 ;
+        :hasCause :cause1 ;
+        :healingStage :healingStage1 ;
+        :severityScore "7"^^xsd:int ;
+        :sizeCM "5.0"^^xsd:float ;
+        :woundID "1001"^^xsd:int ;
+        rdfs:label "Wound 1001" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound2
+:wound2 rdf:type owl:NamedIndividual ,
+                 :SurgicalWound ;
+        :affects :patient2 ;
+        :hasCause :cause2 ;
+        :healingStage :healingStage2 ;
+        :severityScore "4"^^xsd:int ;
+        :sizeCM "3.5"^^xsd:float ;
+        :woundID "1002"^^xsd:int ;
+        rdfs:label "Wound 1002" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound3
+:wound3 rdf:type owl:NamedIndividual ,
+                 :AcuteWound ;
+        :affects :patient3 ;
+        :hasCause :cause3 ;
+        :healingStage :healingStage3 ;
+        :severityScore "5"^^xsd:int ;
+        :sizeCM "4.2"^^xsd:float ;
+        :woundID "1003"^^xsd:int ;
+        rdfs:label "Wound 1003" .
+
+
+###  http://www.semanticweb.org/hafsa/ontologies/2025/10/wound-ontology/wound4
+:wound4 rdf:type owl:NamedIndividual ,
+                 :ChronicWound ;
+        :affects :patient2 ;
+        :hasCause :cause3 ;
+        :healingStage :healingStage1 ;
+        :severityScore "6"^^xsd:int ;
+        :sizeCM "4.8"^^xsd:float ;
+        :woundID "1004"^^xsd:int ;
+        rdfs:label "Wound 1004" .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
