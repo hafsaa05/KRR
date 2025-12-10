@@ -1,68 +1,61 @@
-# Prefixes
-PREFIX mayor: <http://example.org/mayor/>
-PREFIX nyc: <http://example.org/nyc/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX schema1: <http://schema.org/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+# QUERY 1 : Simple triple pattern matching
+# "List all mayors of New York."
 
-# 1. Simple triple pattern matching
-# CQ1: Retrieve all mayors and their birth dates.
-SELECT ?mayor ?name ?birthDate
+PREFIX ex: <http://example.org/nyc/>
+
+SELECT ?mayor
 WHERE {
-    ?mayor a schema1:Person ;
-           rdfs:label ?name ;
-           schema1:birthDate ?birthDate .
+    ?mayor a ex:Mayor .
 }
 
-# 2. Filtering using logical & numerical operators
-# CQ2: Mayors born after 1940 who have a term starting after 2000.
-# (Using safe string comparison due to xsd:date issues in Protégé)
-SELECT ?mayor ?name ?birth ?term ?start
-WHERE {
-    ?mayor a schema1:Person ;
-           rdfs:label ?name ;
-           schema1:birthDate ?birth ;
-           schema1:hasOccupation ?term .
-    ?term schema1:startDate ?start .
+# QUERY 2 : Filtering using logical/numerical operators
+# "Which mayors served after the year 2010?"
 
-    FILTER(STR(?birth) > "1940-01-01")
-    FILTER(STR(?start) > "2000-01-01")
-}
-ORDER BY ?start
+PREFIX ex: <http://example.org/nyc/>
 
-# 3. OPTIONAL usage
-# CQ3: Retrieve mayors and their political party (if available).
-SELECT ?mayor ?name ?birthDate ?partyName
+SELECT ?mayor ?start
 WHERE {
-    ?mayor a schema1:Person ;
-           rdfs:label ?name ;
-           schema1:birthDate ?birthDate .
-    OPTIONAL {
-        ?mayor schema1:affiliation ?party .
-        ?party rdfs:label ?partyName .
-    }
+    ?mayor ex:startDate ?start .
+    FILTER ( ?start > "2010-01-01"^^xsd:date )
 }
 
-# 4. Aggregation (COUNT)
-# CQ4: Count how many mayors belong to each political party.
-SELECT ?partyName (COUNT(?mayor) AS ?numMayors)
-WHERE {
-    ?mayor schema1:affiliation ?party .
-    ?party rdfs:label ?partyName .
-}
-GROUP BY ?partyName
 
-# 5. Graph traversal (3+ hops)
-# CQ5: Successor of the predecessor of a mayor born after 1950.
-SELECT ?mayor ?name ?successor2Name
-WHERE {
-    ?mayor a schema1:Person ;
-           rdfs:label ?name ;
-           schema1:birthDate ?birthDate .
-    ?mayor mayor:precededBy ?pred1 .
-    ?pred1 mayor:precededBy ?pred2 .
-    ?pred2 mayor:succeededBy ?successor2 .
-    ?successor2 rdfs:label ?successor2Name .
+# QUERY 3 : OPTIONAL usage
+# "List all mayors with their start and end dates (even if end date is missing)."
 
-    FILTER(STR(?birthDate) > "1950-01-01")
+PREFIX ex: <http://example.org/nyc/>
+
+SELECT ?mayor ?start ?end
+WHERE {
+    ?mayor a ex:Mayor .
+    OPTIONAL { ?mayor ex:startDate ?start . }
+    OPTIONAL { ?mayor ex:endDate ?end . }
 }
+
+
+# QUERY 4 : Aggregation (COUNT)
+# "How many mayors belonged to each political party?"
+
+PREFIX ex: <http://example.org/nyc/>
+
+SELECT ?party (COUNT(?mayor) AS ?totalMayors)
+WHERE {
+    ?mayor ex:partyAffiliation ?party .
+}
+GROUP BY ?party
+
+
+# QUERY 5 : Graph traversal across *3 hops*
+# "Find the successor of the successor of the successor of Rudy Giuliani"
+# (3-hop traversal through ex:succeededBy)
+
+
+PREFIX ex: <http://example.org/nyc/>
+
+SELECT ?hop3
+WHERE {
+    ex:Rudy_Giuliani ex:succeededBy ?hop1 .
+    ?hop1 ex:succeededBy ?hop2 .
+    ?hop2 ex:succeededBy ?hop3 .
+}
+
