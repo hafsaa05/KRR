@@ -941,3 +941,99 @@ int main(int argc, char *argv[])
     MPI_Finalize();
     return 0;
 }
+
+# =========================
+# CREATE FOLDER
+# =========================
+
+mkdir PDC
+
+# GO INTO FOLDER
+cd PDC
+
+
+# =========================
+# CREATE OPENMP FILE
+# =========================
+
+nano conway_openmp.c
+
+# OR
+gedit conway_openmp.c
+
+
+# =========================
+# CREATE INPUT FILE
+# =========================
+
+nano input.txt
+
+# OR
+gedit input.txt
+
+
+# =========================
+# COMPILE OPENMP
+# =========================
+
+gcc -fopenmp conway_openmp.c -o openmp
+
+
+# =========================
+# SET THREADS
+# =========================
+
+export OMP_NUM_THREADS=4
+
+
+# =========================
+# RUN OPENMP
+# =========================
+
+./openmp
+
+
+# =========================
+# CREATE MPI FILE
+# =========================
+
+nano conway_mpi.c
+
+# OR
+gedit conway_mpi.c
+
+
+# =========================
+# COMPILE MPI
+# =========================
+
+mpicc conway_mpi.c -o mpi_program
+
+
+# =========================
+# RUN MPI
+# =========================
+
+mpirun -np 4 ./mpi_program
+
+
+# =========================
+# INSTALL MPI (IF NEEDED)
+# =========================
+
+sudo apt update
+
+sudo apt install mpich
+
+# OR
+
+sudo apt install openmpi-bin openmpi-common libopenmpi-dev
+
+
+# =========================
+# GIVE EXECUTION PERMISSION
+# =========================
+
+chmod +x openmp
+
+chmod +x mpi_program
