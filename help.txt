@@ -452,3 +452,492 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+//ImageBlurMP
+#include <stdio.h>
+#include <stdlib.h>
+#include <mpi.h>
+
+#define KERNEL 3   // 3x3 blur
+
+// ----------------------------------------------------
+// Compute average of neighbors (blur)
+// ----------------------------------------------------
+int get_blur(int *img, int rows, int cols, int x, int y)
+{
+    int sum = 0;
+    int count = 0;
+
+    for(int i = -1; i <= 1; i++)
+    {
+        for(int j = -1; j <= 1; j++)
+        {
+            int nx = x + i;
+            int ny = y + j;
+
+            if(nx >= 0 && nx < rows &&
+               ny >= 0 && ny < cols)
+            {
+                sum += img[nx * cols + ny];
+                count++;
+            }
+        }
+    }
+
+    return sum / count;
+}
+
+// ----------------------------------------------------
+int main(int argc, char *argv[])
+{
+    MPI_Init(&argc, &argv);
+
+    int rank, size;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    int rows, cols;
+
+    int *img = NULL;
+
+    // ---------------- ROOT READ FILE ----------------
+    if(rank == 0)
+    {
+        FILE *fp = fopen("image.txt", "r");
+
+        fscanf(fp, "%d %d", &rows, &cols);
+
+        img = malloc(rows * cols * sizeof(int));
+
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < cols; j++)
+            {
+                fscanf(fp, "%d", &img[i * cols + j]);
+            }
+        }
+
+        fclose(fp);
+    }
+
+    // broadcast size
+    MPI_Bcast(&rows, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&cols, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    int local_rows = rows / size;
+
+    int *local = malloc(local_rows * cols * sizeof(int));
+    int *result = malloc(local_rows * cols * sizeof(int));
+
+    // distribute image rows
+    MPI_Scatter(img,
+                local_rows * cols,
+                MPI_INT,
+                local,
+                local_rows * cols,
+                MPI_INT,
+                0,
+                MPI_COMM_WORLD);
+
+    // ---------------- PROCESSING ----------------
+    for(int i = 0; i < local_rows; i++)
+    {
+        for(int j = 0; j < cols; j++)
+        {
+            result[i * cols + j] =
+                get_blur(local, local_rows, cols, i, j);
+        }
+    }
+
+    // gather results
+    MPI_Gather(result,
+               local_rows * cols,
+               MPI_INT,
+               img,
+               local_rows * cols,
+               MPI_INT,
+               0,
+               MPI_COMM_WORLD);
+
+    // print result
+    if(rank == 0)
+    {
+        printf("Blurred Image:\n");
+
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < cols; j++)
+            {
+                printf("%d ", img[i * cols + j]);
+            }
+            printf("\n");
+        }
+    }
+
+    MPI_Finalize();
+    return 0;
+}
+
+//ImageBlurOpenMP
+#include <stdio.h>
+#include <stdlib.h>
+#include <omp.h>
+
+#define TILE 32
+
+// ------------------------------------------------------------
+// Blur function
+// Computes average of neighboring pixels
+// ------------------------------------------------------------
+int blur_pixel(int **img,
+               int rows,
+               int cols,
+               int x,
+               int y)
+{
+    int sum = 0;
+    int count = 0;
+
+    // Traverse neighboring cells
+    for(int i=-1; i<=1; i++)
+    {
+        for(int j=-1; j<=1; j++)
+        {
+            int nx = x + i;
+            int ny = y + j;
+
+            // Boundary check
+            if(nx>=0 && nx<rows &&
+               ny>=0 && ny<cols)
+            {
+                sum += img[nx][ny];
+                count++;
+            }
+        }
+    }
+
+    // Return average
+    return sum / count;
+}
+
+int main()
+{
+    FILE *fp = fopen("image.txt","r");
+
+    int rows, cols;
+
+    fscanf(fp,"%d %d",&rows,&cols);
+
+    // --------------------------------------------------------
+    // Dynamic 2D allocation
+    // --------------------------------------------------------
+    int **img = malloc(rows*sizeof(int *));
+    int **result = malloc(rows*sizeof(int *));
+
+    for(int i=0; i<rows; i++)
+    {
+        img[i] = malloc(cols*sizeof(int));
+        result[i] = malloc(cols*sizeof(int));
+    }
+
+    // Read image
+    for(int i=0; i<rows; i++)
+    {
+        for(int j=0; j<cols; j++)
+        {
+            fscanf(fp,"%d",&img[i][j]);
+        }
+    }
+
+    fclose(fp);
+
+    // --------------------------------------------------------
+    // Parallel tiled blur
+    // --------------------------------------------------------
+    #pragma omp parallel for collapse(2) schedule(static)
+
+    for(int ii=0; ii<rows; ii+=TILE)
+    {
+        for(int jj=0; jj<cols; jj+=TILE)
+        {
+            for(int i=ii;
+                i<ii+TILE && i<rows;
+                i++)
+            {
+                for(int j=jj;
+                    j<jj+TILE && j<cols;
+                    j++)
+                {
+                    result[i][j] =
+                        blur_pixel(
+                            img,
+                            rows,
+                            cols,
+                            i,
+                            j
+                        );
+                }
+            }
+        }
+    }
+
+    // Print blurred image
+    printf("Blurred Image:\n");
+
+    for(int i=0; i<rows; i++)
+    {
+        for(int j=0; j<cols; j++)
+        {
+            printf("%d ", result[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
+
+//OPENMP MATRIX MULTIPLICATION
+#include <stdio.h>
+#include <stdlib.h>
+#include <omp.h>
+
+#define TILE 32
+
+int main()
+{
+    FILE *fp = fopen("matrix.txt","r");
+
+    int rowsA, colsA, colsB;
+
+    // Read dimensions
+    fscanf(fp,"%d %d %d",
+           &rowsA,
+           &colsA,
+           &colsB);
+
+    // --------------------------------------------------------
+    // Dynamic allocation
+    // --------------------------------------------------------
+    int **A = malloc(rowsA*sizeof(int *));
+    int **B = malloc(colsA*sizeof(int *));
+    int **C = malloc(rowsA*sizeof(int *));
+
+    for(int i=0; i<rowsA; i++)
+    {
+        A[i] = malloc(colsA*sizeof(int));
+        C[i] = malloc(colsB*sizeof(int));
+    }
+
+    for(int i=0; i<colsA; i++)
+    {
+        B[i] = malloc(colsB*sizeof(int));
+    }
+
+    // --------------------------------------------------------
+    // Read Matrix A
+    // --------------------------------------------------------
+    for(int i=0; i<rowsA; i++)
+    {
+        for(int j=0; j<colsA; j++)
+        {
+            fscanf(fp,"%d",&A[i][j]);
+        }
+    }
+
+    // --------------------------------------------------------
+    // Read Matrix B
+    // --------------------------------------------------------
+    for(int i=0; i<colsA; i++)
+    {
+        for(int j=0; j<colsB; j++)
+        {
+            fscanf(fp,"%d",&B[i][j]);
+        }
+    }
+
+    fclose(fp);
+
+    // --------------------------------------------------------
+    // Initialize result matrix
+    // --------------------------------------------------------
+    for(int i=0; i<rowsA; i++)
+    {
+        for(int j=0; j<colsB; j++)
+        {
+            C[i][j] = 0;
+        }
+    }
+
+    // --------------------------------------------------------
+    // Parallel tiled matrix multiplication
+    // --------------------------------------------------------
+    #pragma omp parallel for collapse(2) schedule(static)
+
+    for(int ii=0; ii<rowsA; ii+=TILE)
+    {
+        for(int jj=0; jj<colsB; jj+=TILE)
+        {
+
+            for(int kk=0; kk<colsA; kk+=TILE)
+            {
+
+                for(int i=ii;
+                    i<ii+TILE && i<rowsA;
+                    i++)
+                {
+
+                    for(int j=jj;
+                        j<jj+TILE && j<colsB;
+                        j++)
+                    {
+
+                        for(int k=kk;
+                            k<kk+TILE && k<colsA;
+                            k++)
+                        {
+
+                            C[i][j] +=
+                                A[i][k] * B[k][j];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // --------------------------------------------------------
+    // Print result matrix
+    // --------------------------------------------------------
+    printf("Result Matrix:\n");
+
+    for(int i=0; i<rowsA; i++)
+    {
+        for(int j=0; j<colsB; j++)
+        {
+            printf("%d ", C[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
+
+//MPI MATRIX MULTIPLICATION
+#include <stdio.h>
+#include <stdlib.h>
+#include <mpi.h>
+
+// ----------------------------------------------------
+int main(int argc, char *argv[])
+{
+    MPI_Init(&argc, &argv);
+
+    int rank, size;
+
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    int A_rows, A_cols, B_cols;
+
+    int *A = NULL;
+    int *B = NULL;
+    int *C = NULL;
+
+    // ---------------- ROOT READ FILE ----------------
+    if(rank == 0)
+    {
+        FILE *fp = fopen("matrix.txt", "r");
+
+        fscanf(fp, "%d %d %d", &A_rows, &A_cols, &B_cols);
+
+        A = malloc(A_rows * A_cols * sizeof(int));
+        B = malloc(A_cols * B_cols * sizeof(int));
+        C = malloc(A_rows * B_cols * sizeof(int));
+
+        for(int i = 0; i < A_rows; i++)
+        {
+            for(int j = 0; j < A_cols; j++)
+            {
+                fscanf(fp, "%d", &A[i * A_cols + j]);
+            }
+        }
+
+        for(int i = 0; i < A_cols; i++)
+        {
+            for(int j = 0; j < B_cols; j++)
+            {
+                fscanf(fp, "%d", &B[i * B_cols + j]);
+            }
+        }
+
+        fclose(fp);
+    }
+
+    // broadcast sizes
+    MPI_Bcast(&A_rows, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&A_cols, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&B_cols, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+    int local_rows = A_rows / size;
+
+    int *local_A = malloc(local_rows * A_cols * sizeof(int));
+    int *local_C = malloc(local_rows * B_cols * sizeof(int));
+
+    // send matrix B to all processes
+    B = malloc(A_cols * B_cols * sizeof(int));
+    MPI_Bcast(B, A_cols * B_cols, MPI_INT, 0, MPI_COMM_WORLD);
+
+    // scatter A
+    MPI_Scatter(A,
+                local_rows * A_cols,
+                MPI_INT,
+                local_A,
+                local_rows * A_cols,
+                MPI_INT,
+                0,
+                MPI_COMM_WORLD);
+
+    // ---------------- MATRIX MULTIPLICATION ----------------
+    for(int i = 0; i < local_rows; i++)
+    {
+        for(int j = 0; j < B_cols; j++)
+        {
+            local_C[i * B_cols + j] = 0;
+
+            for(int k = 0; k < A_cols; k++)
+            {
+                local_C[i * B_cols + j] +=
+                    local_A[i * A_cols + k] * B[k * B_cols + j];
+            }
+        }
+    }
+
+    // gather result
+    MPI_Gather(local_C,
+               local_rows * B_cols,
+               MPI_INT,
+               C,
+               local_rows * B_cols,
+               MPI_INT,
+               0,
+               MPI_COMM_WORLD);
+
+    // print result
+    if(rank == 0)
+    {
+        printf("Result Matrix:\n");
+
+        for(int i = 0; i < A_rows; i++)
+        {
+            for(int j = 0; j < B_cols; j++)
+            {
+                printf("%d ", C[i * B_cols + j]);
+            }
+            printf("\n");
+        }
+    }
+
+    MPI_Finalize();
+    return 0;
+}
